@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dzakir Huda — Graphic Design & Wilcom Embroidery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Fira+Code:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg:           #080B0E;
+            --surface:      #111418;
+            --surface-hi:   #181C21;
+            --border:       #1E2328;
+            --txt:          #F0F2F4;
+            --txt-2:        #8899A6;
+            --txt-3:        #4A5568;
+            --accent:       #00E5BC;
+            --accent-dim:   rgba(0,229,188,.10);
+            --accent-brd:   rgba(0,229,188,.30);
+            --ff-disp:      'Syne', sans-serif;
+            --ff-body:      'DM Sans', sans-serif;
+            --ff-mono:      'Fira Code', monospace;
+            --r-sm: 8px; --r-md: 14px; --r-lg: 20px;
+            --ease: .3s cubic-bezier(.4,0,.2,1);
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--ff-body); background: var(--bg); color: var(--txt); line-height: 1.65; overflow-x: hidden; }
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; display: block; }
+        ::selection { background: var(--accent); color: var(--bg); }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+        .container { max-width: 1080px; margin: 0 auto; padding: 0 2rem; }
+        .sec { padding: 96px 0; }
+        .sec-bg { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+        .eyebrow {
+            font-family: var(--ff-mono); font-size: .73rem; font-weight: 300;
+            color: var(--accent); letter-spacing: .15em; text-transform: uppercase;
+            display: flex; align-items: center; gap: .625rem; margin-bottom: .875rem;
+        }
+        .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); flex-shrink: 0; }
+        .sec-title { font-family: var(--ff-disp); font-size: clamp(1.9rem, 4.5vw, 2.9rem); font-weight: 700; letter-spacing: -.02em; line-height: 1.15; margin-bottom: .875rem; }
+        .sec-sub { color: var(--txt-2); font-size: 1.0125rem; max-width: 480px; }
+
+        .fi { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+        .fi.on { opacity: 1; transform: none; }
+
+        /* NAVBAR */
+        #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; padding: 1.25rem 0; border-bottom: 1px solid transparent; transition: background var(--ease), border-color var(--ease), padding var(--ease); }
+        #nav.stuck { background: rgba(8,11,14,.92); backdrop-filter: blur(14px); border-color: var(--border); padding: .875rem 0; }
+        .nav-row { display: flex; align-items: center; justify-content: space-between; }
+        .nav-logo { font-family: var(--ff-disp); font-size: 1.2rem; font-weight: 800; letter-spacing: -.03em; }
+        .nav-logo em { color: var(--accent); font-style: normal; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { font-size: .875rem; color: var(--txt-2); transition: color var(--ease); position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px; background: var(--accent); transform: scaleX(0); transition: transform var(--ease); transform-origin: left; }
+        .nav-links a:hover, .nav-links a.active { color: var(--txt); }
+        .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+        .nav-cta { background: var(--accent-dim) !important; border: 1px solid var(--accent-brd) !important; color: var(--accent) !important; padding: .45rem 1.1rem; border-radius: var(--r-sm); font-size: .825rem; }
+        .nav-cta:hover { background: var(--accent) !important; color: var(--bg) !important; }
+        .nav-cta::after { display: none !important; }
+        .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+        .burger span { display: block; width: 22px; height: 2px; background: var(--txt); border-radius: 2px; transition: var(--ease); }
+
+        /* TICKER */
+        .ticker { margin-top: 68px; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; padding: .6rem 0; white-space: nowrap; user-select: none; }
+        .ticker-track { display: inline-flex; animation: roll 30s linear infinite; }
+        .ticker-item { font-family: var(--ff-mono); font-size: .75rem; font-weight: 300; color: var(--txt-2); padding: 0 2rem; display: flex; align-items: center; gap: .5rem; }
+        .ticker-item::before { content: '◆'; color: var(--accent); font-size: .45rem; }
+        @keyframes roll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+        /* HERO */
+        #hero { min-height: calc(100vh - 68px); display: flex; align-items: center; padding: 5rem 0 4rem; }
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .hero-badge { display: inline-flex; align-items: center; gap: .5rem; background: var(--accent-dim); border: 1px solid var(--accent-brd); padding: .3rem .875rem; border-radius: 100px; font-size: .8rem; color: var(--accent); margin-bottom: 1.75rem; }
+        .badge-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: blink 2.2s ease-in-out infinite; }
+        @keyframes blink { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.4; transform:scale(.7); } }
+        .hero-h1 { font-family: var(--ff-disp); font-size: clamp(2.8rem, 7vw, 5.2rem); font-weight: 800; letter-spacing: -.03em; line-height: 1.05; margin-bottom: 1.25rem; }
+        .hero-h1 .hi { display: block; color: var(--txt-2); font-size: .52em; font-weight: 600; margin-bottom: .25em; }
+        .hero-h1 .name { display: block; }
+        .hero-h1 .accent { color: var(--accent); }
+        .hero-p { font-size: 1.05rem; color: var(--txt-2); line-height: 1.8; max-width: 420px; margin-bottom: 2.25rem; }
+        .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        .btn { display: inline-flex; align-items: center; gap: .45rem; padding: .7rem 1.6rem; border-radius: var(--r-sm); font-family: var(--ff-body); font-size: .9rem; font-weight: 500; cursor: pointer; border: none; transition: var(--ease); }
+        .btn-a { background: var(--accent); color: var(--bg); }
+        .btn-a:hover { background: #00ffcf; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,229,188,.28); }
+        .btn-b { background: transparent; color: var(--txt); border: 1px solid var(--border); }
+        .btn-b:hover { border-color: var(--accent-brd); color: var(--accent); background: var(--accent-dim); }
+
+        /* Profile card */
+        .hero-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 1.875rem; position: relative; overflow: hidden; }
+        .hero-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 75% 10%, rgba(0,229,188,.07) 0%, transparent 55%); pointer-events: none; }
+        .card-chrome { display: flex; align-items: center; gap: .45rem; margin-bottom: 1.75rem; }
+        .c-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .card-avatar { width: 68px; height: 68px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #0099ff); display: flex; align-items: center; justify-content: center; font-family: var(--ff-disp); font-size: 1.4rem; font-weight: 800; color: var(--bg); margin-bottom: 1.1rem; }
+        .card-name { font-family: var(--ff-disp); font-size: 1.15rem; font-weight: 700; margin-bottom: .2rem; }
+        .card-role { font-size: .85rem; color: var(--txt-2); margin-bottom: 1.4rem; }
+        .card-chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.4rem; }
+        .chip { font-family: var(--ff-mono); font-size: .7rem; color: var(--txt-2); background: var(--surface-hi); border: 1px solid var(--border); padding: .22rem .55rem; border-radius: var(--r-sm); }
+        .card-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: .875rem; padding-top: 1.25rem; border-top: 1px solid var(--border); }
+        .stat-v { font-family: var(--ff-disp); font-size: 1.7rem; font-weight: 800; display: block; text-align: center; }
+        .stat-l { font-family: var(--ff-mono); font-size: .68rem; color: var(--txt-2); display: block; text-align: center; }
+        .dot-grid { position: absolute; top: -24px; right: -24px; display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; }
+        .dg-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border); }
+
+        /* ABOUT */
+        .about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: center; }
+        .about-img-wrap { position: relative; }
+        .about-photo { width: 100%; aspect-ratio: 4/5; background: var(--surface-hi); border: 1px solid var(--border); border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: .75rem; color: var(--txt-3); font-size: .8rem; font-family: var(--ff-mono); overflow: hidden; }
+        .about-photo img { width: 100%; height: 100%; object-fit: cover; }
+        .about-badge { position: absolute; bottom: -18px; right: -18px; background: var(--accent); color: var(--bg); border-radius: var(--r-sm); padding: .875rem 1.125rem; }
+        .about-badge strong { font-family: var(--ff-disp); font-size: 1.8rem; font-weight: 800; display: block; line-height: 1; }
+        .about-badge span { font-size: .72rem; font-weight: 600; }
+        .about-body p { color: var(--txt-2); margin-bottom: 1.2rem; line-height: 1.8; }
+        .about-body p strong { color: var(--txt); }
+        .about-list { list-style: none; margin-top: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+        .about-list li { font-size: .875rem; color: var(--txt-2); display: flex; align-items: center; gap: .45rem; }
+        .about-list li::before { content: '→'; color: var(--accent); }
+
+        /* SKILLS */
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px,1fr)); gap: 1rem; margin-top: 3rem; }
+        .sk-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 1.2rem; cursor: default; transition: border-color var(--ease), transform var(--ease); }
+        .sk-card:hover { border-color: var(--accent-brd); transform: translateY(-4px); }
+        .sk-icon { width: 38px; height: 38px; border-radius: var(--r-sm); background: var(--surface-hi); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: .8rem; }
+        .sk-name { font-family: var(--ff-disp); font-size: .9rem; font-weight: 600; margin-bottom: .2rem; }
+        .sk-lvl { font-family: var(--ff-mono); font-size: .68rem; color: var(--txt-3); }
+        .sk-bar { height: 3px; background: var(--border); border-radius: 2px; margin-top: .7rem; overflow: hidden; }
+        .sk-fill { height: 100%; background: var(--accent); border-radius: 2px; width: 0; transition: width 1s ease; }
+
+        /* PROJECTS */
+        .proj-header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem; }
+        .filter-row { display: flex; gap: .5rem; flex-wrap: wrap; }
+        .ftab { font-family: var(--ff-mono); font-size: .75rem; padding: .35rem .85rem; border: 1px solid var(--border); border-radius: 100px; background: transparent; color: var(--txt-2); cursor: pointer; transition: var(--ease); }
+        .ftab:hover, .ftab.on { background: var(--accent-dim); border-color: var(--accent-brd); color: var(--accent); }
+        .proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(315px,1fr)); gap: 1.4rem; }
+        .proj-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; display: flex; flex-direction: column; transition: border-color var(--ease), transform var(--ease), box-shadow var(--ease); }
+        .proj-card:hover { border-color: var(--accent-brd); transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,.4); }
+        .proj-thumb { aspect-ratio: 16/9; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--surface-hi); }
+        .proj-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease; }
+        .proj-card:hover .proj-thumb img { transform: scale(1.05); }
+        .proj-thumb-grad { position: absolute; inset: 0; opacity: .65; }
+        .proj-emoji { position: relative; z-index: 1; font-size: 2.5rem; }
+        .proj-body { padding: 1.4rem; flex: 1; display: flex; flex-direction: column; }
+        .proj-tags { display: flex; gap: .35rem; flex-wrap: wrap; margin-bottom: .8rem; }
+        .proj-tag { font-family: var(--ff-mono); font-size: .68rem; color: var(--txt-3); background: var(--surface); padding: .18rem .5rem; border-radius: 4px; }
+        .proj-title { font-family: var(--ff-disp); font-size: 1.05rem; font-weight: 700; letter-spacing: -.01em; margin-bottom: .45rem; }
+        .proj-desc { font-size: .85rem; color: var(--txt-2); line-height: 1.7; flex: 1; margin-bottom: 1.2rem; }
+        .proj-links { display: flex; gap: .75rem; }
+        .proj-lnk { font-size: .78rem; color: var(--txt-2); display: flex; align-items: center; gap: .35rem; transition: color var(--ease); }
+        .proj-lnk:hover { color: var(--accent); }
+
+        /* APPRECIATIONS badge */
+        .proj-appr {
+            position: absolute; top: 10px; right: 10px; z-index: 2;
+            background: rgba(8,11,14,.75); backdrop-filter: blur(6px);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: .2rem .6rem;
+            font-family: var(--ff-mono);
+            font-size: .68rem;
+            color: var(--accent);
+            display: flex; align-items: center; gap: .3rem;
+        }
+
+        /* BLOG */
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(295px,1fr)); gap: 1.4rem; margin-top: 3rem; }
+        .blog-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 1.625rem; display: flex; flex-direction: column; gap: .8rem; transition: border-color var(--ease), transform var(--ease); }
+        .blog-card:hover { border-color: var(--accent-brd); transform: translateY(-4px); }
+        .blog-meta { display: flex; gap: .75rem; align-items: center; font-family: var(--ff-mono); font-size: .73rem; color: var(--txt-3); }
+        .blog-cat { color: var(--accent); background: var(--accent-dim); padding: .18rem .5rem; border-radius: 4px; }
+        .blog-title { font-family: var(--ff-disp); font-size: 1.05rem; font-weight: 700; letter-spacing: -.01em; line-height: 1.4; transition: color var(--ease); }
+        .blog-card:hover .blog-title { color: var(--accent); }
+        .blog-ex { font-size: .85rem; color: var(--txt-2); line-height: 1.7; flex: 1; }
+        .blog-more { font-size: .8rem; color: var(--accent); display: flex; align-items: center; gap: .35rem; transition: gap var(--ease); }
+        .blog-card:hover .blog-more { gap: .6rem; }
+
+        /* CONTACT */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: start; }
+        .contact-p { color: var(--txt-2); line-height: 1.8; margin-bottom: 1.875rem; }
+        .contact-items { display: flex; flex-direction: column; gap: 1rem; }
+        .ci { display: flex; align-items: center; gap: .875rem; }
+        .ci-icon { width: 40px; height: 40px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1rem; }
+        .ci-label { font-family: var(--ff-mono); font-size: .72rem; color: var(--txt-3); display: block; margin-bottom: .1rem; }
+        .ci-val { font-size: .9rem; color: var(--txt); }
+        .form { display: flex; flex-direction: column; gap: 1.1rem; }
+        .fg { display: flex; flex-direction: column; gap: .45rem; }
+        .fg label { font-family: var(--ff-mono); font-size: .73rem; color: var(--txt-3); }
+        .fg input, .fg textarea { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-sm); padding: .7rem .95rem; font-family: var(--ff-body); font-size: .9rem; color: var(--txt); outline: none; transition: border-color var(--ease); resize: none; width: 100%; }
+        .fg input:focus, .fg textarea:focus { border-color: var(--accent-brd); }
+        .fg input::placeholder, .fg textarea::placeholder { color: var(--txt-3); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+
+        /* FOOTER */
+        footer { padding: 1.875rem 0; border-top: 1px solid var(--border); }
+        .foot-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .875rem; }
+        .foot-copy { font-family: var(--ff-mono); font-size: .76rem; color: var(--txt-3); }
+        .foot-copy em { color: var(--accent); font-style: normal; }
+        .foot-links { display: flex; gap: 1.5rem; list-style: none; }
+        .foot-links a { font-size: .76rem; color: var(--txt-3); transition: color var(--ease); }
+        .foot-links a:hover { color: var(--accent); }
+
+        #btt { position: fixed; bottom: 1.875rem; right: 1.875rem; z-index: 99; width: 40px; height: 40px; background: var(--accent); color: var(--bg); border: none; border-radius: var(--r-sm); cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity var(--ease), transform var(--ease); }
+        #btt.vis { opacity: 1; pointer-events: all; }
+        #btt:hover { transform: translateY(-3px); }
+
+        /* BEHANCE link highlight */
+        .behance-link {
+            display: inline-flex; align-items: center; gap: .5rem;
+            color: #1769ff; transition: color var(--ease);
+        }
+        .behance-link:hover { color: var(--accent); }
+
+        @media (max-width: 780px) {
+            .hero-grid { grid-template-columns: 1fr; }
+            .hero-card-col { display: none; }
+            .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .form-row { grid-template-columns: 1fr; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--surface); border-bottom: 1px solid var(--border); padding: 1.5rem 2rem; gap: 1.25rem; }
+            .nav-links.open { display: flex; }
+            .burger { display: flex; }
+            .proj-header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="nav">
+  <div class="container">
+    <div class="nav-row">
+      <a href="#hero" class="nav-logo">DH<em>.</em>design</a>
+      <ul class="nav-links" id="navlinks">
+        <li><a href="#about">Tentang</a></li>
+        <li><a href="#skills">Keahlian</a></li>
+        <li><a href="#projects">Proyek</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#contact" class="nav-cta">Kontak</a></li>
+      </ul>
+      <div class="burger" id="burger"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">Adobe Illustrator</span>
+    <span class="ticker-item">Adobe Photoshop</span>
+    <span class="ticker-item">Wilcom Embroidery Studio</span>
+    <span class="ticker-item">CorelDRAW</span>
+    <span class="ticker-item">Logo Design</span>
+    <span class="ticker-item">Brand Identity</span>
+    <span class="ticker-item">Jersey &amp; Apparel Design</span>
+    <span class="ticker-item">Vector Art</span>
+    <span class="ticker-item">Tersedia untuk Freelance 🇮🇩</span>
+    <span class="ticker-item">Adobe Illustrator</span>
+    <span class="ticker-item">Adobe Photoshop</span>
+    <span class="ticker-item">Wilcom Embroidery Studio</span>
+    <span class="ticker-item">CorelDRAW</span>
+    <span class="ticker-item">Logo Design</span>
+    <span class="ticker-item">Brand Identity</span>
+    <span class="ticker-item">Jersey &amp; Apparel Design</span>
+    <span class="ticker-item">Vector Art</span>
+    <span class="ticker-item">Tersedia untuk Freelance 🇮🇩</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="fi">
+        <div class="hero-badge"><span class="badge-dot"></span>Tersedia untuk Freelance</div>
+        <h1 class="hero-h1">
+          <span class="hi">Halo, Saya</span>
+          <span class="name">Dzakir<br><span class="accent">Huda</span></span>
+        </h1>
+        <p class="hero-p">
+          Seorang <strong style="color:var(--txt)">Graphic Designer &amp; Wilcom Embroidery Specialist</strong> yang
+          menciptakan identitas visual yang kuat — dari logo minimalis, desain kaos, hingga digitalisasi bordir berkualitas tinggi. Berbasis di Indonesia.
+        </p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn btn-a">Lihat Karya <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+          <a href="https://www.behance.net/daudzgraphic" target="_blank" class="btn btn-b">Behance Profile</a>
+        </div>
+      </div>
+
+      <div class="hero-card-col fi" style="transition-delay:.18s; position:relative;">
+        <div class="dot-grid" id="dotgrid"></div>
+        <div class="hero-card">
+          <div class="card-chrome">
+            <div class="c-dot" style="background:#FF5F57"></div>
+            <div class="c-dot" style="background:#FEBC2E"></div>
+            <div class="c-dot" style="background:#28C840"></div>
+          </div>
+          <div class="card-avatar">D</div>
+          <div class="card-name">Dzakir Huda</div>
+          <div class="card-role">Graphic Designer · Embroidery Specialist · Indonesia</div>
+          <div class="card-chips">
+            <span class="chip">Illustrator</span>
+            <span class="chip">Photoshop</span>
+            <span class="chip">Wilcom</span>
+            <span class="chip">CorelDRAW</span>
+            <span class="chip">Canva</span>
+          </div>
+          <div class="card-stats">
+            <div><span class="stat-v" data-target="14">0</span><span class="stat-l">Proyek</span></div>
+            <div><span class="stat-v" data-target="50">0</span><span class="stat-l">Apresiasi</span></div>
+            <div><span class="stat-v" data-target="100">0</span><span class="stat-l">Views</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="sec sec-bg">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap fi">
+        <div class="about-photo">
+          <img src="https://lh3.googleusercontent.com/a/ACg8ocI9X1wroSaHlB64Wa81p-x9SckB8yCAiPcrFcJQD_2P7LGs-pY-qzMKjaEpKtTEVESL0c4VwMEMkQenN5ifjwOybjSEnXj8=s288-c-no">
+          <span>Dzakir Huda</span>
+        </div>
+        <div class="about-badge"><strong>10+</strong><span>Karya di Behance</span></div>
+      </div>
+      <div class="about-body fi" style="transition-delay:.15s">
+        <p class="eyebrow">Tentang Saya</p>
+        <h2 class="sec-title">Desain yang berbicara, bordir yang bercerita</h2>
+        <p>
+          Saya adalah <strong>Dzakir Huda</strong>, seorang desainer grafis dan spesialis bordir dari Indonesia.
+          Saya bergerak di dua dunia yang saling melengkapi: menciptakan identitas visual digital yang bersih dan impactful,
+          serta mendigitalisasi desain ke dalam format bordir menggunakan <strong>Wilcom Embroidery Studio</strong>.
+        </p>
+        <p>
+          Karya saya mencakup <strong>logo minimalis</strong>, <strong>desain apparel &amp; jersey</strong>,
+          dan <strong>konversi desain ke bordir</strong> yang presisi. Setiap proyek dikerjakan dengan
+          perhatian penuh terhadap detail — dari kurva vektor hingga setting stitch density bordir.
+        </p>
+        <ul class="about-list">
+          <li>Indonesia</li>
+          <li>Tersedia untuk Freelance</li>
+          <li>Behance: daudzgraphic</li>
+          <li>Graphic &amp; Embroidery Design</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="sec">
+  <div class="container">
+    <div class="fi">
+      <p class="eyebrow">Keahlian</p>
+      <h2 class="sec-title">Tools &amp; Spesialisasi</h2>
+      <p class="sec-sub">Menggunakan software industri terkemuka untuk hasil desain dan bordir yang profesional.</p>
+    </div>
+    <div class="skills-grid" id="skills-grid"></div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="sec sec-bg">
+  <div class="container">
+    <div class="proj-header">
+      <div class="fi">
+        <p class="eyebrow">Portofolio · Behance</p>
+        <h2 class="sec-title">Karya Pilihan</h2>
+      </div>
+      <div class="filter-row fi">
+        <button class="ftab on" data-f="all">Semua</button>
+        <button class="ftab" data-f="logo">Logo Design</button>
+        <button class="ftab" data-f="embroidery">Embroidery</button>
+        <button class="ftab" data-f="apparel">Apparel</button>
+        <button class="ftab" data-f="design">Graphic Design</button>
+      </div>
+    </div>
+    <div class="proj-grid" id="proj-grid"></div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog" class="sec">
+  <div class="container">
+    <div class="fi">
+      <p class="eyebrow">Blog</p>
+      <h2 class="sec-title">Tulisan Terbaru</h2>
+      <p class="sec-sub">Tips dan insight seputar desain grafis, logo, dan teknik bordir Wilcom.</p>
+    </div>
+    <div class="blog-grid" id="blog-grid"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="sec sec-bg">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="fi">
+        <p class="eyebrow">Kontak</p>
+        <h2 class="sec-title">Punya Proyek? Hubungi Saya</h2>
+        <p class="contact-p">
+          Butuh logo minimalis, desain jersey tim, atau digitalisasi bordir untuk produksi?
+          Saya siap membantu mewujudkan visi Anda menjadi karya nyata.
+        </p>
+        <div class="contact-items">
+          <div class="ci">
+            <div class="ci-icon">🎨</div>
+            <div>
+              <span class="ci-label">// behance</span>
+              <a href="https://www.behance.net/daudzgraphic" target="_blank" class="ci-val behance-link">
+                behance.net/daudzgraphic
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="ci">
+            <div class="ci-icon">📧</div>
+            <div><span class="ci-label">// email</span><span class="ci-val">daudzgraphic11@gmail.com</span></div>
+          </div>
+          <div class="ci">
+            <div class="ci-icon">📍</div>
+            <div><span class="ci-label">// lokasi</span><span class="ci-val">Jakarta,Indonesia</span></div>
+          </div>
+          <div class="ci">
+            <div class="ci-icon">💬</div>
+            <div><span class="ci-label">// whatsapp / chat</span><span class="ci-val">+62 xxx-xxxx-xxxx</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="form fi" style="transition-delay:.15s">
+        <div class="form-row">
+          <div class="fg"><label for="fn">// nama</label><input type="text" id="fn" placeholder="Nama lengkap"></div>
+          <div class="fg"><label for="fe">// email</label><input type="email" id="fe" placeholder="email@contoh.com"></div>
+        </div>
+        <div class="fg"><label for="fs">// subjek</label><input type="text" id="fs" placeholder="Logo, Jersey, Embroidery..."></div>
+        <div class="fg"><label for="fm">// pesan</label><textarea id="fm" rows="5" placeholder="Ceritakan detail proyekmu..."></textarea></div>
+        <button class="btn btn-a" id="send-btn" style="align-self:flex-start">
+          Kirim Pesan
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-row">
+      <p class="foot-copy">© 2026 <em>Dzakir Huda</em>. Graphic Design &amp; Wilcom Embroidery · Indonesia.</p>
+      <ul class="foot-links">
+        <li><a href="#hero">Beranda</a></li>
+        <li><a href="#projects">Proyek</a></li>
+        <li><a href="https://www.behance.net/daudzgraphic" target="_blank">Behance</a></li>
+        <li><a href="#contact">Kontak</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<button id="btt" title="Kembali ke atas">↑</button>
+
+<script>
+/* ============ DATA ============ */
+const SKILLS = [
+  {name:'Adobe Illustrator', icon:'🖊️',  lvl:'Expert',       pct:95},
+  {name:'Adobe Photoshop',   icon:'🖼️',  lvl:'Expert',       pct:90},
+  {name:'Wilcom Studio',     icon:'✏️',  lvl:'Expert',     pct:90},
+  {name:'CorelDRAW',         icon:'✏️',  lvl:'Expert',     pct:90},
+  {name:'Canva',             icon:'🎨',  lvl:'Intermediate',     pct:82},
+  {name:'Logo Design',       icon:'⬡',   lvl:'Expert',       pct:93},
+  {name:'Brand Identity',    icon:'💼',  lvl:'Advanced',     pct:85},
+  {name:'Apparel Design',    icon:'👕',  lvl:'Advanced',     pct:88},
+  {name:'Jersey Pattern',    icon:'⚽',  lvl:'Advanced',     pct:87},
+  {name:'Vector Art',        icon:'🔷',  lvl:'Expert',       pct:95},
+  {name:'Typography',        icon:'🔤',  lvl:'Advanced',     pct:84},
+  {name:'Mockup Design',     icon:'📐',  lvl:'Intermediate', pct:75},
+];
+
+const PROJECTS = [
+  {
+    title: 'Redraw',
+    desc:  'Redraw vektor presisi tinggi — mengubah referensi gambar menjadi vektor bersih, skalabel, dan siap produksi.',
+    tags:  ['Vector Art','Adobe Illustrator','Redraw'],
+    cat:   'design',
+    img:   'https://mir-s3-cdn-cf.behance.net/projects/404/dba433250619339.Y3JvcCw3OTUsNjIyLDYwMiwzNQ.jpg',
+    link:  'https://www.behance.net/gallery/250619339/Redraw',
+    appr:  1,
+  },
+  {
+    title: 'Jersey Pattern',
+    desc:  'Desain pola jersey dengan motif geometris yang kuat dan estetis, cocok untuk tim olahraga maupun streetwear.',
+    tags:  ['Jersey Design','Pattern','Apparel'],
+    cat:   'apparel',
+    img:   'https://mir-s3-cdn-cf.behance.net/projects/404/4defd6250619077.Y3JvcCwxNzQ1LDEzNjUsNTEsMA.jpg',
+    link:  'https://www.behance.net/gallery/250619077/Jersey-Pattern',
+    appr:  1,
+  },
+  {
+    title: 'Tshirt Design',
+    desc:  'Desain kaos dengan konsep kreatif, memadukan ilustrasi dan tipografi untuk hasil yang eye-catching dan siap cetak.',
+    tags:  ['T-Shirt','Apparel Design','Print'],
+    cat:   'apparel',
+    img:   'https://mir-s3-cdn-cf.behance.net/projects/404/347ef3250618763.Y3JvcCwyNzgzLDIxNzcsNTUsMA.jpg',
+    link:  'https://www.behance.net/gallery/250618763/Tshirt-Design',
+    appr:  1,
+  },
+  {
+    title: 'Minimalist Logo Design',
+    desc:  'Desain logo minimalis yang elegan — bentuk bersih, filosofi kuat, dan cocok untuk berbagai media cetak maupun digital.',
+    tags:  ['Logo Design','Minimalist','Brand Identity'],
+    cat:   'logo',
+    img:   'https://mir-s3-cdn-cf.behance.net/projects/404/3efa2a250227681.Y3JvcCwzMDY0LDIzOTcsNDAyLDA.jpg',
+    link:  'https://www.behance.net/gallery/250227681/MInimalist-Logo-Design',
+    appr:  1,
+  },
+  {
+    title: 'Minimalist Logo Design II',
+    desc:  'Eksplorasi lanjutan logo minimalis dengan komposisi tipografi yang presisi dan pilihan warna yang timeless.',
+    tags:  ['Logo Design','Typography','Branding'],
+    cat:   'logo',
+    img:   'https://mir-s3-cdn-cf.behance.net/projects/404/72ea03250225715.Y3JvcCwzMDY0LDIzOTcsNDAyLDA.jpg',
+    link:  'https://www.behance.net/gallery/250225715/Minimalist-Logo-Design',
+    appr:  1,
+  },
+  {
+    title: 'Convert to Embroidery',
+    desc:  'Konversi desain grafis ke file bordir Wilcom — pengaturan stitch type, density, dan underlay untuk hasil bordir yang presisi.',
+    tags:  ['Wilcom','Embroidery','Digitizing'],
+    cat:   'embroidery',
+    img:   'https://mir-s3-cdn-cf.behance.net/projects/404/d03844250025925.Y3JvcCwyNTE3LDE5NjgsOTMsMA.jpg',
+    link:  'https://www.behance.net/gallery/250025925/convert-to-Embroidery',
+    appr:  1,
+  },
+  {
+    title: 'Wilcom Embroidery',
+    desc:  'Desain bordir kompleks menggunakan Wilcom Embroidery Studio dengan teknik fill stitch dan satin stitch yang sempurna.',
+    tags:  ['Wilcom','Embroidery Studio','Satin Stitch'],
+    cat:   'embroidery',
+    img:   'https://mir-s3-cdn-cf.behance.net/projects/404/4be8f4249973497.Y3JvcCwyODcwLDIyNDUsNTExLDA.jpg',
+    link:  'https://www.behance.net/gallery/249973497/Wilcom-embroidery',
+    appr:  2,
+  },
+  {
+    title: 'Graphic Design',
+    desc:  'Koleksi karya desain grafis yang mencakup poster, visual konten, dan material promosi dengan estetika yang kuat.',
+    tags:  ['Graphic Design','Poster','Visual Content'],
+    cat:   'design',
+    img:   'https://mir-s3-cdn-cf.behance.net/projects/404/71d043249835515.Y3JvcCwyODcwLDIyNDUsNTExLDA.jpg',
+    link:  'https://www.behance.net/gallery/249835515/graphic-design',
+    appr:  1,
+  },
+  {
+    title: 'Minimalist Logo Design III',
+    desc:  'Seri desain logo minimalis dengan pendekatan "less is more" — menghasilkan simbol yang memorable dan versatile.',
+    tags:  ['Logo Design','Minimalist','Symbol'],
+    cat:   'logo',
+    img:   'https://mir-s3-cdn-cf.behance.net/projects/404/d75837249687331.Y3JvcCwzNDI1LDI2NzksMTI0Niww.jpg',
+    link:  'https://www.behance.net/gallery/249687331/Minimalist-logo-design',
+    appr:  1,
+  },
+  {
+    title: 'Mockup Jersey',
+    desc:  'Presentasi mockup jersey dengan rendering realistis dan detail warna yang akurat untuk keperluan pitch klien dan produksi.',
+    tags:  ['Jersey Mockup','Apparel','Presentation'],
+    cat:   'apparel',
+    img:   'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/5cb9f7250795437.6a27c36387367.jpg',
+    link:  'https://www.behance.net/gallery/250795437/Jersey-Design',
+    appr:  1,
+  },
+];
+
+const POSTS = [
+  {
+    title: 'Rahasia Logo Minimalis yang Tak Lekang Waktu',
+    ex:    'Logo yang baik bukan soal banyaknya elemen, tapi soal ketepatan setiap garis. Pelajari prinsip-prinsip di balik desain logo minimalis yang abadi.',
+    cat:   'Logo Design',
+    date:  'Jun 2026',
+  },
+  {
+    title: 'Panduan Lengkap Digitalisasi Desain ke Bordir Wilcom',
+    ex:    'Dari gambar vektor hingga file .emb siap mesin — langkah-langkah praktis menggunakan Wilcom Embroidery Studio untuk hasil bordir yang bersih dan berkualitas.',
+    cat:   'Embroidery',
+    date:  'Mei 2026',
+  },
+  {
+    title: 'Tips Mendesain Jersey Tim yang Profesional',
+    ex:    'Desain jersey yang bagus harus tetap terbaca dari jarak jauh, tahan lama saat diproduksi, dan merepresentasikan identitas tim. Ini caranya.',
+    cat:   'Apparel Design',
+    date:  'Apr 2026',
+  },
+];
+
+/* ============ RENDER ============ */
+function renderSkills() {
+  document.getElementById('skills-grid').innerHTML =
+    SKILLS.map(s => `
+      <div class="sk-card fi">
+        <div class="sk-icon">${s.icon}</div>
+        <div class="sk-name">${s.name}</div>
+        <div class="sk-lvl">${s.lvl}</div>
+        <div class="sk-bar"><div class="sk-fill" data-pct="${s.pct}"></div></div>
+      </div>
+    `).join('');
+}
+
+function renderProjects(f='all') {
+  const list = f==='all' ? PROJECTS : PROJECTS.filter(p=>p.cat===f);
+  document.getElementById('proj-grid').innerHTML =
+    list.map(p => `
+      <div class="proj-card fi">
+        <div class="proj-thumb">
+          <img src="${p.img}" alt="${p.title}" loading="lazy"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="proj-thumb-grad" style="display:none; background:linear-gradient(135deg,#111418,#1E2328); position:absolute; inset:0; align-items:center; justify-content:center; font-size:2rem;">🎨</div>
+          <div class="proj-appr">♥ ${p.appr}</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-tags">${p.tags.map(t=>`<span class="proj-tag">${t}</span>`).join('')}</div>
+          <h3 class="proj-title">${p.title}</h3>
+          <p class="proj-desc">${p.desc}</p>
+          <div class="proj-links">
+            <a href="${p.link}" target="_blank" class="proj-lnk">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Lihat di Behance
+            </a>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  observeAll();
+}
+
+function renderBlog() {
+  document.getElementById('blog-grid').innerHTML =
+    POSTS.map(p => `
+      <div class="blog-card fi">
+        <div class="blog-meta"><span class="blog-cat">${p.cat}</span><span>${p.date}</span></div>
+        <h3 class="blog-title">${p.title}</h3>
+        <p class="blog-ex">${p.ex}</p>
+        <a href="#" class="blog-more">Baca selengkapnya →</a>
+      </div>
+    `).join('');
+}
+
+/* ============ DOT GRID ============ */
+document.getElementById('dotgrid').innerHTML =
+  Array(25).fill('<div class="dg-dot"></div>').join('');
+
+/* ============ INTERSECTION OBSERVER ============ */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('on');
+    const fill = e.target.querySelector('.sk-fill');
+    if (fill) setTimeout(() => fill.style.width = fill.dataset.pct+'%', 120);
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+function observeAll() {
+  document.querySelectorAll('.fi').forEach(el => io.observe(el));
+}
+
+/* ============ COUNT-UP ============ */
+const cio = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.querySelectorAll('[data-target]').forEach(el => {
+      const target = +el.dataset.target;
+      let cur = 0;
+      const step = Math.max(1, Math.ceil(target/30));
+      const iv = setInterval(() => {
+        cur = Math.min(cur+step, target);
+        el.textContent = cur;
+        if (cur >= target) clearInterval(iv);
+      }, 45);
+    });
+    cio.unobserve(e.target);
+  });
+}, { threshold: 0.6 });
+
+/* ============ NAVBAR ============ */
+const NAV = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  NAV.classList.toggle('stuck', window.scrollY > 50);
+  document.getElementById('btt').classList.toggle('vis', window.scrollY > 300);
+  ['about','skills','projects','blog','contact'].forEach(id => {
+    const sec = document.getElementById(id);
+    const lnk = document.querySelector(`.nav-links a[href="#${id}"]`);
+    if (!sec || !lnk) return;
+    const r = sec.getBoundingClientRect();
+    lnk.classList.toggle('active', r.top <= 100 && r.bottom >= 100);
+  });
+});
+
+const burger = document.getElementById('burger');
+const navlinks = document.getElementById('navlinks');
+burger.addEventListener('click', () => navlinks.classList.toggle('open'));
+navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navlinks.classList.remove('open')));
+document.getElementById('btt').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+/* ============ FILTER ============ */
+document.querySelector('.filter-row').addEventListener('click', e => {
+  if (!e.target.classList.contains('ftab')) return;
+  document.querySelectorAll('.ftab').forEach(t => t.classList.remove('on'));
+  e.target.classList.add('on');
+  renderProjects(e.target.dataset.f);
+});
+
+/* ============ FORM ============ */
+document.getElementById('send-btn').addEventListener('click', function() {
+  this.textContent = 'Terkirim ✓';
+  this.style.background = '#28C840';
+  this.disabled = true;
+  setTimeout(() => {
+    this.innerHTML = 'Kirim Pesan <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>';
+    this.style.background = '';
+    this.disabled = false;
+  }, 3000);
+});
+
+/* ============ SMOOTH SCROLL ============ */
+document.querySelectorAll('a[href^="#"]').forEach(a =>
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({behavior:'smooth', block:'start'});
+  })
+);
+
+/* ============ INIT ============ */
+renderSkills();
+renderProjects();
+renderBlog();
+observeAll();
+const heroCard = document.querySelector('.hero-card');
+if (heroCard) cio.observe(heroCard);
+</script>
+</body>
+</html>

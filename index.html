@@ -312,9 +312,9 @@
             <span class="chip">Canva</span>
           </div>
           <div class="card-stats">
+            <div><span class="stat-v" data-target="5">0</span><span class="stat-l">Thn. Pengalaman</span></div>
             <div><span class="stat-v" data-target="14">0</span><span class="stat-l">Proyek</span></div>
             <div><span class="stat-v" data-target="50">0</span><span class="stat-l">Apresiasi</span></div>
-            <div><span class="stat-v" data-target="100">0</span><span class="stat-l">Views</span></div>
           </div>
         </div>
       </div>
@@ -331,26 +331,29 @@
           <img src="https://lh3.googleusercontent.com/a/ACg8ocLAeGh6H_SWXOd6_TLz1zq-29a-RlSpntw5IXf_1q-YZ-qBU3bR=s288-c-no">
           <span>Dzakir Huda</span>
         </div>
-        <div class="about-badge"><strong>10+</strong><span>Karya di Behance</span></div>
+        <div class="about-badge"><strong>5+</strong><span>Tahun Pengalaman</span></div>
       </div>
       <div class="about-body fi" style="transition-delay:.15s">
         <p class="eyebrow">Tentang Saya</p>
         <h2 class="sec-title">Desain yang berbicara, bordir yang bercerita</h2>
         <p>
-          Saya adalah <strong>Dzakir Huda</strong>, seorang desainer grafis dan spesialis bordir dari Indonesia.
+          Saya adalah <strong>Dzakir Huda</strong>, seorang desainer grafis dan spesialis bordir dari Indonesia
+          dengan <strong style="color:var(--accent)">pengalaman lebih dari 5 tahun</strong> di bidang desain grafis dan embroidery.
           Saya bergerak di dua dunia yang saling melengkapi: menciptakan identitas visual digital yang bersih dan impactful,
           serta mendigitalisasi desain ke dalam format bordir menggunakan <strong>Wilcom Embroidery Studio</strong>.
         </p>
         <p>
-          Karya saya mencakup <strong>logo minimalis</strong>, <strong>desain apparel &amp; jersey</strong>,
-          dan <strong>konversi desain ke bordir</strong> yang presisi. Setiap proyek dikerjakan dengan
-          perhatian penuh terhadap detail — dari kurva vektor hingga setting stitch density bordir.
+          Selama 5 tahun berkarya, saya telah menangani berbagai proyek mulai dari <strong>logo minimalis</strong>,
+          <strong>desain apparel &amp; jersey</strong>, hingga <strong>konversi desain ke bordir</strong> yang presisi.
+          Setiap proyek dikerjakan dengan perhatian penuh terhadap detail — dari kurva vektor hingga setting stitch density bordir.
         </p>
         <ul class="about-list">
           <li>Indonesia</li>
           <li>Tersedia untuk Freelance</li>
           <li>Behance: daudzgraphic</li>
           <li>Graphic &amp; Embroidery Design</li>
+          <li>5+ Tahun Pengalaman</li>
+          <li>Desain Grafis &amp; Bordir</li>
         </ul>
       </div>
     </div>
@@ -448,6 +451,9 @@
           Kirim Pesan
           <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
         </button>
+        <p style="font-family:var(--ff-mono); font-size:.7rem; color:var(--txt-3); margin-top:.5rem;">
+          → Pesan akan dikirim ke <span style="color:var(--accent)">daudzgraphic11@gmail.com</span>
+        </p>
       </div>
     </div>
   </div>
@@ -719,13 +725,29 @@ document.querySelector('.filter-row').addEventListener('click', e => {
 
 /* ============ FORM ============ */
 document.getElementById('send-btn').addEventListener('click', function() {
-  this.textContent = 'Terkirim ✓';
-  this.style.background = '#28C840';
-  this.disabled = true;
+  const name    = document.getElementById('fn').value.trim();
+  const email   = document.getElementById('fe').value.trim();
+  const subject = document.getElementById('fs').value.trim();
+  const message = document.getElementById('fm').value.trim();
+
+  if (!name || !email || !message) {
+    alert('Mohon lengkapi nama, email, dan pesan terlebih dahulu.');
+    return;
+  }
+
+  const body = `Halo Dzakir,\n\nAda pesan baru dari portofolio Anda:\n\nNama: ${name}\nEmail: ${email}\n\nPesan:\n${message}\n\n---\nDikirim dari daudzgraphic.store`;
+  const mailtoLink = `mailto:daudzgraphic11@gmail.com?subject=${encodeURIComponent(subject || 'Pesan dari Portofolio')}&body=${encodeURIComponent(body)}`;
+
+  window.location.href = mailtoLink;
+
+  const btn = this;
+  btn.textContent = 'Membuka Email ✓';
+  btn.style.background = '#28C840';
+  btn.disabled = true;
   setTimeout(() => {
-    this.innerHTML = 'Kirim Pesan <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>';
-    this.style.background = '';
-    this.disabled = false;
+    btn.innerHTML = 'Kirim Pesan <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>';
+    btn.style.background = '';
+    btn.disabled = false;
   }, 3000);
 });
 
